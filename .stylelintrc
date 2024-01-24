@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-standard",
+    "stylelint-config-recommended-scss",
+    "stylelint-config-standard-scss"
+  ],
+  "plugins": [
+    "stylelint-scss",
+    "stylelint-prettier"
+  ],
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": [
+          "global"
+        ]
+      }
+    ],
+    "no-descending-specificity": null,
+    "no-empty-source": null
+  }
+}
