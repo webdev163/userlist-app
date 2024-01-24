@@ -1,0 +1,33 @@
+.wrapper {
+  max-width: 438px;
+  width: 100%;
+  padding: 50px 60px 32px;
+  border-radius: 24px;
+  background: var(--light-color);
+  box-shadow: 0 6px 30px 0 rgb(0 0 0 / 6%);
+}
+
+.title {
+  color: var(--dark-color);
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.input {
+  margin-top: 32px;
+}
+
+.btn {
+  border-radius: 8px;
+  background: linear-gradient(127deg, #00eaf9 -13.37%, #00bdf9 96.31%);
+  width: 100%;
+  padding: 11px 20px;
+  color: var(--light-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+  margin-top: 16px;
+}

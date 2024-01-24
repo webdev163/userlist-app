@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { StoreProvider } from '~/store/components/StoreProvider';
 import { router } from '~/router/AppRouter';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 import './styles/globals.scss';
 
