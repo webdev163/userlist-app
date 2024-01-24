@@ -3,6 +3,8 @@ import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
+import { AppLoader } from '../common/AppLoader';
+import { delay } from '~/utils/delay';
 
 interface AuthProviderProps {
   children: ReactElement | null;
@@ -23,14 +25,15 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     } else {
       navigate('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    setIsReady(true);
+    delay(700, () => setIsReady(true));
     handleRedirect();
-  }, [seed]);
+  }, [seed, handleRedirect]);
 
-  if (!isReady) return null;
+  if (!isReady) return <AppLoader />;
 
   return children;
 };
