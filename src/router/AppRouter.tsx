@@ -3,6 +3,7 @@ import { Navigate, RouteProps, createBrowserRouter } from 'react-router-dom';
 import { LoginPage } from '~/pages/LoginPage';
 import { ListPage } from '~/pages/ListPage';
 import { RequireAuth } from './RequireAuth';
+import { AuthProvider } from '~/components/auth/AuthProvider';
 
 type AppRoutesProps = RouteProps & {
   authOnly?: boolean;
@@ -19,7 +20,7 @@ const renderWithWrapper = (route: AppRoutesProps) => {
   return {
     index: route.path === '/',
     path: route.path === '/' ? undefined : route.path,
-    element: route.authOnly ? <RequireAuth>{element}</RequireAuth> : element,
+    element: <AuthProvider>{route.authOnly ? <RequireAuth>{element}</RequireAuth> : element}</AuthProvider>,
   };
 };
 

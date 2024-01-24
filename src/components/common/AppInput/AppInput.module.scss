@@ -23,3 +23,7 @@
     color: var(--text-secondary-color);
   }
 }
+
+.error {
+  border-bottom: 1px solid var(--error-color);
+}

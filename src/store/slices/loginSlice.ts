@@ -1,17 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface LoginState {
-  isLoading: boolean;
+  seed: string | null;
 }
 
 const initialState: LoginState = {
-  isLoading: false,
+  seed: null,
 };
 
 export const loginSlice = createSlice({
   name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    setSeed: (state, action: PayloadAction<string>) => {
+      state.seed = action.payload;
+    },
+  },
 });
 
 export const loginActions = loginSlice.actions;
