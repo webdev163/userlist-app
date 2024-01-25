@@ -63,7 +63,7 @@ const Layout: FC<AppModalProps> = ({ onClose, children, isOpened, className }) =
         classNames={contentAnimation}
       >
         <div ref={contentRef} className={modalClass}>
-          <button type="button" className={styles.btn} onClick={onClose} />
+          <button type="button" aria-label="Закрыть модальное окно" className={styles.btn} onClick={onClose} />
           {children}
         </div>
       </CSSTransition>

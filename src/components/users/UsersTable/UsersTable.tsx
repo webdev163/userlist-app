@@ -52,7 +52,7 @@ export const UsersTable: FC = () => {
   if (!usersData || usersData.length === 0 || !isFetched) return null;
 
   return (
-    <div className={styles.wrapper}>
+    <main className={styles.wrapper}>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -90,6 +90,6 @@ export const UsersTable: FC = () => {
       <AppModal isOpened={isModalActive} onClose={onModalClose}>
         <ModalForm onClose={onModalClose} currentUser={currentUser} />
       </AppModal>
-    </div>
+    </main>
   );
 };

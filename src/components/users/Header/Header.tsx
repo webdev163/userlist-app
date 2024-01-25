@@ -37,14 +37,14 @@ export const Header: FC = () => {
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <header className={styles.wrapper}>
         <button className={cn(styles.btn, styles.add)} onClick={onModalOpen}>
           Добавить пользователя
         </button>
         <button className={cn(styles.btn, styles.exit)} onClick={handleLogout}>
           Выйти
         </button>
-      </div>
+      </header>
       <AppModal isOpened={isModalActive} onClose={onModalClose}>
         <ModalForm onClose={onModalClose} />
       </AppModal>
