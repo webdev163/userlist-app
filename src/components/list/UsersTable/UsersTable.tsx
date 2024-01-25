@@ -2,26 +2,34 @@ import { FC, useEffect } from 'react';
 import cn from 'clsx';
 import { useAppActions } from '~/store/hooks';
 import { useAppSelector } from '~/store/hooks';
-import { userActions, selectUsers } from '~/store/slices/userSlice';
+import { userActions, selectUsers, selectPage } from '~/store/slices/userSlice';
 import { loginSelectors } from '~/store/slices/loginSlice';
+import { InView } from 'react-intersection-observer';
 
 import styles from './UsersTable.module.scss';
 
 export const UsersTable: FC = () => {
   const seed = useAppSelector(loginSelectors.selectSeed);
   const usersData = useAppSelector(selectUsers);
+  const page = useAppSelector(selectPage);
 
   const actions = useAppActions(userActions);
 
-  const fetchData = (seed: string) => {
-    actions.fetchUsers(seed);
+  const fetchData = (seed: string, page: number = 1) => {
+    actions.fetchUsers({ seed, page });
+  };
+
+  const handleNextPage = (inView: boolean) => {
+    if (inView) actions.increasePage();
   };
 
   // const handleUserEdit = () => {};
 
   useEffect(() => {
-    if (seed && usersData && usersData.length === 0) fetchData(seed);
-  }, [usersData]);
+    if (seed && page) fetchData(seed, page);
+  }, [seed, page]);
+
+  if (!usersData || usersData.length === 0) return null;
 
   return (
     <div className={styles.wrapper}>
@@ -56,6 +64,7 @@ export const UsersTable: FC = () => {
               </tr>
             );
           })}
+          <InView as="tr" onChange={handleNextPage} />
         </tbody>
       </table>
     </div>

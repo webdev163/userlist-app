@@ -15,6 +15,9 @@ export const loginSlice = createSlice({
     setSeed: (state, action: PayloadAction<string>) => {
       state.seed = action.payload;
     },
+    emptySeed: state => {
+      state.seed = null;
+    },
   },
   selectors: {
     selectSeed: (state: LoginState) => state.seed,

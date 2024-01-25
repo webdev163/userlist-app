@@ -11,19 +11,21 @@ export interface UserState {
   users: User[];
   isLoading: boolean;
   error: string;
+  page: number;
 }
 
 const initialState: UserState = {
   users: [],
   isLoading: false,
   error: '',
+  page: 1,
 };
 
-export const fetchUsers = createAsyncThunk<User[], string, AsyncThunkConfig<string>>(
+export const fetchUsers = createAsyncThunk<User[], { seed: string; page: number }, AsyncThunkConfig<string>>(
   'user/fetchUsers',
-  async (seed, { rejectWithValue }) => {
+  async ({ seed, page }, { rejectWithValue }) => {
     try {
-      const response = await axios.get<ApiResponse>(`${BASE_URL}&seed=${seed}`);
+      const response = await axios.get<ApiResponse>(`${BASE_URL}&seed=${seed}&page=${page}`);
       return response.data.results;
     } catch (e) {
       return rejectWithValue((e as AxiosError).message);
@@ -34,7 +36,11 @@ export const fetchUsers = createAsyncThunk<User[], string, AsyncThunkConfig<stri
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    increasePage: state => {
+      state.page += 1;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchUsers.pending, state => {
@@ -48,7 +54,7 @@ export const userSlice = createSlice({
           el.id = nanoid();
           el.isCustom = false;
         });
-        state.users = payload;
+        state.users.push(...payload);
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.isLoading = false;
@@ -58,6 +64,7 @@ export const userSlice = createSlice({
 });
 
 export const selectUsers = (state: StateSchema) => state.user?.users;
+export const selectPage = (state: StateSchema) => state.user?.page;
 export const selectUsersIsLoading = (state: StateSchema) => state.user?.isLoading;
 export const selectUsersError = (state: StateSchema) => state.user?.error;
 

@@ -1,12 +1,13 @@
 .wrapper {
   display: flex;
+  align-items: center;
   justify-content: center;
   background: var(--bg-color);
   min-height: calc(100vh - 76px);
 }
 
 .table {
-  margin-top: 48px;
+  margin-bottom: 76px;
   width: 748px;
   border-collapse: collapse;
   background: var(--light-color);
@@ -108,4 +109,9 @@
     color: #a8a8a8;
     background: #f2f2f7;
   }
+}
+
+.trigger {
+  height: 1px;
+  background-color: red;
 }
