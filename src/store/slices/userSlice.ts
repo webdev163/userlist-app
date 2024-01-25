@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { StateSchema } from '../stateSchema';
-import axios, { AxiosError } from 'axios';
 import { User } from '~/types/models';
 import { AsyncThunkConfig } from '~/store/types';
 import { BASE_URL, LocalStorageKeys } from '~/utils/constants';
@@ -28,10 +27,11 @@ export const fetchUsers = createAsyncThunk<User[], { seed: string; page: number 
   'user/fetchUsers',
   async ({ seed, page }, { rejectWithValue }) => {
     try {
-      const response = await axios.get<ApiResponse>(`${BASE_URL}&seed=${seed}&page=${page}`);
-      return response.data.results;
+      const response = await fetch(`${BASE_URL}&seed=${seed}&page=${page}`);
+      const data: ApiResponse = await response.json();
+      return data.results;
     } catch (e) {
-      return rejectWithValue((e as AxiosError).message);
+      return rejectWithValue((e as Error).message);
     }
   },
 );

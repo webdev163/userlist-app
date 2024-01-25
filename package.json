@@ -10,11 +10,11 @@
     "stylelint": "stylelint --aei --fix \"src/**/*.{css,scss,sass}\"",
     "format": "prettier --write --log-level warn \"src/**/*.{ts,tsx,css,scss,sass}\"",
     "preview": "vite preview",
+    "analyze": "vite-bundle-visualizer",
     "prepare": "husky install"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
-    "axios": "^1.6.5",
     "nanoid": "^5.0.4",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
@@ -52,7 +52,8 @@
     "stylelint-scss": "^6.1.0",
     "typescript": "^5.2.2",
     "typescript-plugin-css-modules": "^5.0.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-bundle-visualizer": "^1.0.0"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,css,sass,scss}": "npm run format",
