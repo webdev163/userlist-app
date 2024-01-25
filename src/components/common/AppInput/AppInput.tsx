@@ -4,21 +4,27 @@ import cn from 'clsx';
 import styles from './AppInput.module.scss';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  title?: string;
-  placeholder?: string;
-  className?: string;
-  isError?: boolean;
+  placeholder: string;
+  isError: boolean;
+  type?: string;
 }
 
 const AppInput: FC<InputProps> = props => {
-  const { className, title, placeholder, isError, ...otherProps } = props;
-
-  const composedClass = cn(styles.wrapper, isError && styles.error, className);
+  const { placeholder, isError, name, type, ...otherProps } = props;
 
   return (
-    <div className={composedClass}>
-      {title && <span className={styles.title}>{title}</span>}
-      <input {...otherProps} placeholder={placeholder} className={styles.input} />
+    <div className={styles.wrapper}>
+      <input
+        {...otherProps}
+        className={cn(styles.input, isError && styles.invalid)}
+        id={name}
+        type={type ?? 'text'}
+        name={name}
+        placeholder={placeholder}
+      />
+      <label htmlFor="firstName" className={styles.label}>
+        {placeholder}
+      </label>
     </div>
   );
 };

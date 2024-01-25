@@ -5,6 +5,7 @@ import { loginActions } from '~/store/slices/loginSlice';
 import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import { AppModal } from '~/components/common/AppModal';
+import { NewUser } from '~/components/list/NewUser';
 
 import styles from './Header.module.scss';
 
@@ -40,7 +41,7 @@ export const Header: FC = () => {
         </button>
       </div>
       <AppModal isOpened={isModalActive} onClose={onModalClose}>
-        <p>Modal</p>
+        <NewUser />
       </AppModal>
     </>
   );

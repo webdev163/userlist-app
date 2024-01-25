@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import AppInput from '~/components/common/AppInput';
+import cn from 'clsx';
 import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
@@ -32,7 +32,10 @@ export const LoginForm: FC = () => {
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>Добро пожаловать</h1>
-      <AppInput title="Seed" className={styles.input} value={seed} onChange={handleInput} isError={isError} />
+      <div className={styles.inner}>
+        <span className={styles.placeholder}>Seed</span>
+        <input className={cn(styles.input, isError && styles.error)} value={seed} onChange={handleInput} />
+      </div>
       <button className={styles.btn} onClick={handleClick}>
         Войти
       </button>
