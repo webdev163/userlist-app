@@ -20,7 +20,7 @@ export const LoginForm: FC = () => {
   };
 
   const handleClick = () => {
-    if (seed === '') {
+    if (seed === '' || !/^[a-zA-Z]+$/.test(seed)) {
       setIsError(true);
       return;
     }
@@ -36,6 +36,7 @@ export const LoginForm: FC = () => {
         <span className={styles.placeholder}>Seed</span>
         <input className={cn(styles.input, isError && styles.error)} value={seed} onChange={handleInput} />
       </div>
+      {isError && <p className={styles.note}>*Поле заполнено не корректно</p>}
       <button className={styles.btn} onClick={handleClick}>
         Войти
       </button>

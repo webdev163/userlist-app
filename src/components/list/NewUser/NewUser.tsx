@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-// import cn from 'clsx';
+import cn from 'clsx';
 import AppInput from '~/components/common/AppInput';
 import { validateTextInput } from '~/utils/validateTextInput';
 import { validateEmail } from '~/utils/validateEmail';
@@ -13,8 +13,6 @@ export const NewUser: FC = () => {
     email: '',
   });
   const [errorArr, setErrorArr] = useState<string[]>([]);
-
-  console.log(inputValues);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,13 +75,17 @@ export const NewUser: FC = () => {
         placeholder="Email*"
         value={inputValues.email}
         name="email"
-        type="email"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValues({ ...inputValues, email: e.target.value })}
         isError={errorArr.includes('email')}
         onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => clearError(e.target.name)}
       />
 
-      <button className={styles.btn} type="submit">
+      {errorArr.length > 0 && <p className={styles.error}>*Некоторые поля заполнены не корректно</p>}
+
+      <button
+        className={cn(styles.btn, Object.entries(inputValues).find(([, v]) => v === '') && styles.disabled)}
+        type="submit"
+      >
         Сохранить
       </button>
     </form>

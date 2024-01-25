@@ -23,9 +23,11 @@
   overflow: auto;
   z-index: 3;
   padding: 24px;
+  padding-bottom: 32px;
   background: white;
   border-radius: 16px;
   min-width: 250px;
+  max-width: 600px;
   text-align: center;
   color: #000;
   position: relative;
@@ -36,36 +38,19 @@
   border: none;
   cursor: pointer;
   position: absolute;
-  padding: 5px;
-  top: 10px;
-  right: 10px;
-  width: 25px;
-  height: 25px;
-  opacity: 0.5;
+  padding: 10px;
+  top: 12px;
+  right: 26px;
+  width: 20px;
+  height: 20px;
+  opacity: 1;
   transition: opacity 0.3s;
+  background-image: url('../../../assets/icons/cross.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
 
   &:hover {
-    opacity: 1;
-  }
-
-  &::before,
-  &::after {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    content: '';
-    height: 18px;
-    width: 2px;
-    background-color: #333;
-  }
-
-  &::before {
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    transform: rotate(-45deg);
+    opacity: 0.7;
   }
 }
 

@@ -49,6 +49,14 @@
   }
 }
 
+.note {
+  color: var(--error-color);
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 0.4px;
+  margin-top: 16px;
+}
+
 .btn {
   border-radius: 8px;
   background: linear-gradient(127deg, #00eaf9 -13.37%, #00bdf9 96.31%);

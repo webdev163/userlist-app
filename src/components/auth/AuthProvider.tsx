@@ -25,7 +25,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     } else {
       navigate('/');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
