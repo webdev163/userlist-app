@@ -5,22 +5,34 @@ import { validateTextInput } from '~/utils/validateTextInput';
 import { validateEmail } from '~/utils/validateEmail';
 import { useAppActions } from '~/store/hooks';
 import { userActions } from '~/store/slices/userSlice';
+import { User } from '~/types/models';
 
-import styles from './NewUser.module.scss';
+import styles from './ModalForm.module.scss';
 
-interface NewUserProps {
+interface ModalFormProps {
   onClose: () => void;
+  currentUser?: User;
 }
 
-export const NewUser: FC<NewUserProps> = ({ onClose }) => {
-  const [inputValues, setInputValues] = useState<{ firstName: string; lastName: string; email: string }>({
-    lastName: '',
-    firstName: '',
-    email: '',
+export const ModalForm: FC<ModalFormProps> = ({ onClose, currentUser }) => {
+  const [inputValues, setInputValues] = useState<{
+    gender: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  }>({
+    gender: currentUser?.gender ?? 'male',
+    lastName: currentUser?.name.last ?? '',
+    firstName: currentUser?.name.first ?? '',
+    email: currentUser?.email ?? '',
   });
   const [errorArr, setErrorArr] = useState<string[]>([]);
 
   const actions = useAppActions(userActions);
+
+  const onRadioChange = () => {
+    setInputValues({ ...inputValues, gender: inputValues.gender === 'male' ? 'female' : 'male' });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +40,7 @@ export const NewUser: FC<NewUserProps> = ({ onClose }) => {
     for (const element in inputValues) {
       if (Object.prototype.hasOwnProperty.call(inputValues, element)) {
         const key: keyof typeof inputValues = element as keyof typeof inputValues;
+        if (key === 'gender') continue;
         if (key === 'email' && validateEmail(inputValues[key])) {
           errors.push(element);
         }
@@ -39,16 +52,21 @@ export const NewUser: FC<NewUserProps> = ({ onClose }) => {
     errors = [...new Set(errors)];
     setErrorArr(errors);
     if (errors.length > 0) return;
-    const isMale = (e.currentTarget.elements.namedItem('male') as HTMLInputElement)?.checked;
     const newUser = {
-      gender: isMale ? 'male' : 'female',
+      gender: inputValues.gender,
       email: inputValues.email,
       name: {
         first: inputValues.firstName,
         last: inputValues.lastName,
       },
+      isCustom: true,
     };
-    actions.addCustomUser(newUser);
+    currentUser ? actions.editCustomUser({ ...newUser, id: currentUser.id }) : actions.addCustomUser(newUser);
+    onClose();
+  };
+
+  const handleRemove = () => {
+    if (currentUser?.id) actions.removeCustomUser(currentUser.id);
     onClose();
   };
 
@@ -58,12 +76,17 @@ export const NewUser: FC<NewUserProps> = ({ onClose }) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <p className={styles.title}>Новый пользователь</p>
-
+      <p className={styles.title}>{currentUser ? 'Редактирование пользователя' : 'Новый пользователь'}</p>
       <div className={styles.radio}>
-        <input type="radio" id="male" name="gender" defaultChecked />
+        <input type="radio" id="male" name="gender" checked={inputValues.gender === 'male'} onChange={onRadioChange} />
         <label htmlFor="male">Мужчина</label>
-        <input type="radio" id="female" name="gender" />
+        <input
+          type="radio"
+          id="female"
+          name="gender"
+          checked={inputValues.gender === 'female'}
+          onChange={onRadioChange}
+        />
         <label htmlFor="female">Женщина</label>
         <div className={styles.slide}></div>
       </div>
@@ -101,12 +124,15 @@ export const NewUser: FC<NewUserProps> = ({ onClose }) => {
 
       {errorArr.length > 0 && <p className={styles.error}>*Некоторые поля заполнены не корректно</p>}
 
-      <button
-        className={cn(styles.btn, Object.entries(inputValues).find(([, v]) => v === '') && styles.disabled)}
-        type="submit"
-      >
-        Сохранить
-      </button>
+      <div className={styles.btnwrapper}>
+        {currentUser && <button type="button" className={styles.delete} onClick={handleRemove} />}
+        <button
+          className={cn(styles.btn, Object.entries(inputValues).find(([, v]) => v === '') && styles.disabled)}
+          type="submit"
+        >
+          Сохранить
+        </button>
+      </div>
     </form>
   );
 };

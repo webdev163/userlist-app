@@ -1,6 +1,6 @@
 export interface User {
-  id: string;
-  isCustom: boolean;
+  id?: string;
+  isCustom?: boolean;
   gender: string;
   email: string;
   name: {

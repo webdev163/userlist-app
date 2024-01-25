@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { StateSchema } from '../stateSchema';
 import axios, { AxiosError } from 'axios';
 import { User } from '~/types/models';
@@ -41,14 +41,17 @@ export const userSlice = createSlice({
     increasePage: state => {
       state.page += 1;
     },
-    restoreUsers: (state, action) => {
+
+    restoreUsers: (state, action: PayloadAction<User[]>) => {
       state.users.unshift(...action.payload);
     },
+
     emptyUsers: state => {
       state.users = [];
     },
-    addCustomUser: (state, action) => {
-      const user = { ...action.payload, id: nanoid(), isCustom: true };
+
+    addCustomUser: (state, action: PayloadAction<User>) => {
+      const user = { ...action.payload, id: nanoid() };
       state.users.unshift(user);
       if (localStorageHelper.load('users')) {
         localStorageHelper.add('users', [user, ...localStorageHelper.load('users')]);
@@ -56,7 +59,28 @@ export const userSlice = createSlice({
         localStorageHelper.add('users', new Array(user));
       }
     },
+
+    editCustomUser: (state, action: PayloadAction<User>) => {
+      const index = state.users.findIndex(el => el.id === action.payload.id);
+      if (index >= 0) state.users[index] = action.payload;
+      localStorageHelper.add('users', [
+        ...localStorageHelper.load('users').map((el: User) => {
+          return el.id === action.payload.id ? action.payload : el;
+        }),
+      ]);
+    },
+
+    removeCustomUser: (state, action: PayloadAction<string>) => {
+      const index = state.users.findIndex(el => el.id === action.payload);
+      if (index >= 0) state.users = state.users.filter(el => el.id !== action.payload);
+      localStorageHelper.add('users', [
+        ...localStorageHelper.load('users').filter((el: User) => {
+          return el.id !== action.payload;
+        }),
+      ]);
+    },
   },
+
   extraReducers: builder => {
     builder
       .addCase(fetchUsers.pending, state => {

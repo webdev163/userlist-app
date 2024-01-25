@@ -23,7 +23,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const handleRedirect = useCallback(() => {
     if (seed) {
-      console.log(customUsers);
       if (customUsers) actionsUser.restoreUsers(customUsers);
       actionsLogin.setSeed(seed);
       navigate('/list');

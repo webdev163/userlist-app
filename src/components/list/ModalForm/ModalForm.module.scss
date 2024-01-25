@@ -79,10 +79,26 @@
   box-shadow: 0 1px 4px 0 rgb(0 0 0 / 6%);
 }
 
+.btnwrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.delete {
+  width: 44px;
+  height: 44px;
+  margin-right: 12px;
+  border-radius: 8px;
+  background: #f2f2f7;
+  background-image: url('../../../assets/icons/bin.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 .btn {
   width: 100%;
   padding: 11px 20px;
-  margin-top: 32px;
   border-radius: 8px;
   background: linear-gradient(137deg, #00a5ee 1.58%, #14d7d1 96.24%);
   color: var(--light-color);
