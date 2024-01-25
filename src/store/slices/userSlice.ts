@@ -3,7 +3,7 @@ import { StateSchema } from '../stateSchema';
 import axios, { AxiosError } from 'axios';
 import { User } from '~/types/models';
 import { AsyncThunkConfig } from '~/store/types';
-import { BASE_URL } from '~/utils/constants';
+import { BASE_URL, LocalStorageKeys } from '~/utils/constants';
 import { ApiResponse } from '~/types/api';
 import { nanoid } from 'nanoid';
 import { localStorageHelper } from '~/utils/localStorageHelper';
@@ -55,18 +55,18 @@ export const userSlice = createSlice({
     addCustomUser: (state, action: PayloadAction<User>) => {
       const user = { ...action.payload, id: nanoid() };
       state.users.unshift(user);
-      if (localStorageHelper.load('users')) {
-        localStorageHelper.add('users', [user, ...localStorageHelper.load('users')]);
+      if (localStorageHelper.load(LocalStorageKeys.USERS)) {
+        localStorageHelper.add(LocalStorageKeys.USERS, [user, ...localStorageHelper.load(LocalStorageKeys.USERS)]);
       } else {
-        localStorageHelper.add('users', new Array(user));
+        localStorageHelper.add(LocalStorageKeys.USERS, new Array(user));
       }
     },
 
     editCustomUser: (state, action: PayloadAction<User>) => {
       const index = state.users.findIndex(el => el.id === action.payload.id);
       if (index >= 0) state.users[index] = action.payload;
-      localStorageHelper.add('users', [
-        ...localStorageHelper.load('users').map((el: User) => {
+      localStorageHelper.add(LocalStorageKeys.USERS, [
+        ...localStorageHelper.load(LocalStorageKeys.USERS).map((el: User) => {
           return el.id === action.payload.id ? action.payload : el;
         }),
       ]);
@@ -75,8 +75,8 @@ export const userSlice = createSlice({
     removeCustomUser: (state, action: PayloadAction<string>) => {
       const index = state.users.findIndex(el => el.id === action.payload);
       if (index >= 0) state.users = state.users.filter(el => el.id !== action.payload);
-      localStorageHelper.add('users', [
-        ...localStorageHelper.load('users').filter((el: User) => {
+      localStorageHelper.add(LocalStorageKeys.USERS, [
+        ...localStorageHelper.load(LocalStorageKeys.USERS).filter((el: User) => {
           return el.id !== action.payload;
         }),
       ]);

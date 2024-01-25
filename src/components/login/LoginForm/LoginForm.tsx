@@ -4,6 +4,7 @@ import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
 import { useNavigate } from 'react-router-dom';
+import { LocalStorageKeys, RouterPaths } from '~/utils/constants';
 
 import styles from './LoginForm.module.scss';
 
@@ -25,9 +26,9 @@ export const LoginForm: FC = () => {
       setIsError(true);
       return;
     }
-    localStorageHelper.add('seed', seed);
+    localStorageHelper.add(LocalStorageKeys.SEED, seed);
     actions.setSeed(seed);
-    navigate('/list');
+    navigate(RouterPaths.LIST);
   };
 
   return (

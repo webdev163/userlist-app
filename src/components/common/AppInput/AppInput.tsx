@@ -22,7 +22,7 @@ const AppInput: FC<InputProps> = props => {
         name={name}
         placeholder={placeholder}
       />
-      <label htmlFor="firstName" className={styles.label}>
+      <label htmlFor={name} className={styles.label}>
         {placeholder}
       </label>
     </div>

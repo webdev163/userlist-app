@@ -7,6 +7,7 @@ import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import { AppModal } from '~/components/common/AppModal';
 import { ModalForm } from '~/components/list/ModalForm';
+import { LocalStorageKeys, RouterPaths } from '~/utils/constants';
 
 import styles from './Header.module.scss';
 
@@ -29,9 +30,9 @@ export const Header: FC = () => {
   const handleLogout = () => {
     actionsLogin.emptySeed();
     actionsUser.emptyUsers();
-    localStorageHelper.remove('seed');
-    localStorageHelper.remove('users');
-    navigate('/');
+    localStorageHelper.remove(LocalStorageKeys.SEED);
+    localStorageHelper.remove(LocalStorageKeys.USERS);
+    navigate(RouterPaths.LOGIN);
   };
 
   return (

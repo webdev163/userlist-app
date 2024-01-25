@@ -6,6 +6,7 @@ import { validateEmail } from '~/utils/validateEmail';
 import { useAppActions } from '~/store/hooks';
 import { userActions } from '~/store/slices/userSlice';
 import { User } from '~/types/models';
+import { FormInputNames, RadioInputValues } from '~/utils/constants';
 
 import styles from './ModalForm.module.scss';
 
@@ -21,7 +22,7 @@ export const ModalForm: FC<ModalFormProps> = ({ onClose, currentUser }) => {
     lastName: string;
     email: string;
   }>({
-    gender: currentUser?.gender ?? 'male',
+    gender: currentUser?.gender ?? RadioInputValues.MALE,
     lastName: currentUser?.name.last ?? '',
     firstName: currentUser?.name.first ?? '',
     email: currentUser?.email ?? '',
@@ -31,7 +32,10 @@ export const ModalForm: FC<ModalFormProps> = ({ onClose, currentUser }) => {
   const actions = useAppActions(userActions);
 
   const onRadioChange = () => {
-    setInputValues({ ...inputValues, gender: inputValues.gender === 'male' ? 'female' : 'male' });
+    setInputValues({
+      ...inputValues,
+      gender: inputValues.gender === RadioInputValues.MALE ? RadioInputValues.FEMALE : RadioInputValues.MALE,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,12 +43,12 @@ export const ModalForm: FC<ModalFormProps> = ({ onClose, currentUser }) => {
     let errors: string[] = [];
     for (const element in inputValues) {
       if (Object.prototype.hasOwnProperty.call(inputValues, element)) {
-        const key: keyof typeof inputValues = element as keyof typeof inputValues;
-        if (key === 'gender') continue;
-        if (key === 'email' && validateEmail(inputValues[key])) {
+        const key = element as keyof typeof inputValues;
+        if (key === FormInputNames.GENDER) continue;
+        if (key === FormInputNames.EMAIL && validateEmail(inputValues[key])) {
           errors.push(element);
         }
-        if (key !== 'email' && validateTextInput(inputValues[key])) {
+        if (key !== FormInputNames.EMAIL && validateTextInput(inputValues[key])) {
           errors.push(element);
         }
       }
@@ -78,47 +82,53 @@ export const ModalForm: FC<ModalFormProps> = ({ onClose, currentUser }) => {
     <form className={styles.form} onSubmit={handleSubmit}>
       <p className={styles.title}>{currentUser ? 'Редактирование пользователя' : 'Новый пользователь'}</p>
       <div className={styles.radio}>
-        <input type="radio" id="male" name="gender" checked={inputValues.gender === 'male'} onChange={onRadioChange} />
-        <label htmlFor="male">Мужчина</label>
         <input
           type="radio"
-          id="female"
-          name="gender"
-          checked={inputValues.gender === 'female'}
+          id={RadioInputValues.MALE}
+          name={FormInputNames.GENDER}
+          checked={inputValues.gender === RadioInputValues.MALE}
           onChange={onRadioChange}
         />
-        <label htmlFor="female">Женщина</label>
+        <label htmlFor={RadioInputValues.MALE}>Мужчина</label>
+        <input
+          type="radio"
+          id={RadioInputValues.FEMALE}
+          name={FormInputNames.GENDER}
+          checked={inputValues.gender === RadioInputValues.FEMALE}
+          onChange={onRadioChange}
+        />
+        <label htmlFor={RadioInputValues.FEMALE}>Женщина</label>
         <div className={styles.slide}></div>
       </div>
 
       <AppInput
         placeholder="Фамилия*"
         value={inputValues.lastName}
-        name="lastName"
+        name={FormInputNames.LAST_NAME}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setInputValues({ ...inputValues, lastName: e.target.value })
         }
-        isError={errorArr.includes('lastName')}
+        isError={errorArr.includes(FormInputNames.LAST_NAME)}
         onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => clearError(e.target.name)}
       />
 
       <AppInput
         placeholder="Имя*"
         value={inputValues.firstName}
-        name="firstName"
+        name={FormInputNames.FIRST_NAME}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setInputValues({ ...inputValues, firstName: e.target.value })
         }
-        isError={errorArr.includes('firstName')}
+        isError={errorArr.includes(FormInputNames.FIRST_NAME)}
         onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => clearError(e.target.name)}
       />
 
       <AppInput
         placeholder="Email*"
         value={inputValues.email}
-        name="email"
+        name={FormInputNames.EMAIL}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValues({ ...inputValues, email: e.target.value })}
-        isError={errorArr.includes('email')}
+        isError={errorArr.includes(FormInputNames.EMAIL)}
         onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => clearError(e.target.name)}
       />
 
