@@ -16,8 +16,13 @@ export const loginSlice = createSlice({
       state.seed = action.payload;
     },
   },
+  selectors: {
+    selectSeed: (state: LoginState) => state.seed,
+  },
 });
 
 export const loginActions = loginSlice.actions;
+
+export const loginSelectors = loginSlice.selectors;
 
 export default loginSlice.reducer;
