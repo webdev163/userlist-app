@@ -1,13 +1,24 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import cn from 'clsx';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
 import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
+import { AppModal } from '~/components/common/AppModal';
 
 import styles from './Header.module.scss';
 
 export const Header: FC = () => {
+  const [isModalActive, setIsModalActive] = useState(false);
+
+  const onModalOpen = () => {
+    setIsModalActive(true);
+  };
+
+  const onModalClose = () => {
+    setIsModalActive(false);
+  };
+
   const actions = useAppActions(loginActions);
 
   const navigate = useNavigate();
@@ -19,11 +30,18 @@ export const Header: FC = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <button className={cn(styles.btn, styles.add)}>Добавить пользователя</button>
-      <button className={cn(styles.btn, styles.exit)} onClick={handleLogout}>
-        Выйти
-      </button>
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        <button className={cn(styles.btn, styles.add)} onClick={onModalOpen}>
+          Добавить пользователя
+        </button>
+        <button className={cn(styles.btn, styles.exit)} onClick={handleLogout}>
+          Выйти
+        </button>
+      </div>
+      <AppModal isOpened={isModalActive} onClose={onModalClose}>
+        <p>Modal</p>
+      </AppModal>
+    </>
   );
 };

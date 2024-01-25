@@ -64,7 +64,7 @@ export const UsersTable: FC = () => {
               </tr>
             );
           })}
-          <InView as="tr" onChange={handleNextPage} />
+          <InView as="tr" onChange={handleNextPage} className={styles.trigger} />
         </tbody>
       </table>
     </div>
