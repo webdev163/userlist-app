@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import cn from 'clsx';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
+import { userActions } from '~/store/slices/userSlice';
 import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import { AppModal } from '~/components/common/AppModal';
@@ -20,13 +21,16 @@ export const Header: FC = () => {
     setIsModalActive(false);
   };
 
-  const actions = useAppActions(loginActions);
+  const actionsLogin = useAppActions(loginActions);
+  const actionsUser = useAppActions(userActions);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    actions.emptySeed();
+    actionsLogin.emptySeed();
+    actionsUser.emptyUsers();
     localStorageHelper.remove('seed');
+    localStorageHelper.remove('users');
     navigate('/');
   };
 
@@ -41,7 +45,7 @@ export const Header: FC = () => {
         </button>
       </div>
       <AppModal isOpened={isModalActive} onClose={onModalClose}>
-        <NewUser />
+        <NewUser onClose={onModalClose} />
       </AppModal>
     </>
   );

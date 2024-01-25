@@ -3,10 +3,16 @@ import cn from 'clsx';
 import AppInput from '~/components/common/AppInput';
 import { validateTextInput } from '~/utils/validateTextInput';
 import { validateEmail } from '~/utils/validateEmail';
+import { useAppActions } from '~/store/hooks';
+import { userActions } from '~/store/slices/userSlice';
 
 import styles from './NewUser.module.scss';
 
-export const NewUser: FC = () => {
+interface NewUserProps {
+  onClose: () => void;
+}
+
+export const NewUser: FC<NewUserProps> = ({ onClose }) => {
   const [inputValues, setInputValues] = useState<{ firstName: string; lastName: string; email: string }>({
     lastName: '',
     firstName: '',
@@ -14,9 +20,11 @@ export const NewUser: FC = () => {
   });
   const [errorArr, setErrorArr] = useState<string[]>([]);
 
+  const actions = useAppActions(userActions);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const errors = [];
+    let errors: string[] = [];
     for (const element in inputValues) {
       if (Object.prototype.hasOwnProperty.call(inputValues, element)) {
         const key: keyof typeof inputValues = element as keyof typeof inputValues;
@@ -27,10 +35,21 @@ export const NewUser: FC = () => {
           errors.push(element);
         }
       }
-      setErrorArr(errors);
-      // if (errors.length > 0) return;
     }
-    console.log([...new Set(errors)]);
+    errors = [...new Set(errors)];
+    setErrorArr(errors);
+    if (errors.length > 0) return;
+    const isMale = (e.currentTarget.elements.namedItem('male') as HTMLInputElement)?.checked;
+    const newUser = {
+      gender: isMale ? 'male' : 'female',
+      email: inputValues.email,
+      name: {
+        first: inputValues.firstName,
+        last: inputValues.lastName,
+      },
+    };
+    actions.addCustomUser(newUser);
+    onClose();
   };
 
   const clearError = (name: string) => {

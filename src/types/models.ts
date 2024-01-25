@@ -6,6 +6,6 @@ export interface User {
   name: {
     first: string;
     last: string;
-    title: string;
+    title?: string;
   };
 }

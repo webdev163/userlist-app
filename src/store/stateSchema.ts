@@ -4,9 +4,7 @@ import { Action, EnhancedStore, Reducer, ReducersMapObject, StateFromReducersMap
 
 export interface StateSchema {
   login: LoginState;
-
-  // Асинхронные редюсеры
-  user?: UserState;
+  user: UserState;
 }
 
 export type StateSchemaKey = keyof StateSchema;

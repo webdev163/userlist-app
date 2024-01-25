@@ -6,6 +6,7 @@ import { AsyncThunkConfig } from '~/store/types';
 import { BASE_URL } from '~/utils/constants';
 import { ApiResponse } from '~/types/api';
 import { nanoid } from 'nanoid';
+import { localStorageHelper } from '~/utils/localStorageHelper';
 
 export interface UserState {
   users: User[];
@@ -39,6 +40,21 @@ export const userSlice = createSlice({
   reducers: {
     increasePage: state => {
       state.page += 1;
+    },
+    restoreUsers: (state, action) => {
+      state.users.unshift(...action.payload);
+    },
+    emptyUsers: state => {
+      state.users = [];
+    },
+    addCustomUser: (state, action) => {
+      const user = { ...action.payload, id: nanoid(), isCustom: true };
+      state.users.unshift(user);
+      if (localStorageHelper.load('users')) {
+        localStorageHelper.add('users', [user, ...localStorageHelper.load('users')]);
+      } else {
+        localStorageHelper.add('users', new Array(user));
+      }
     },
   },
   extraReducers: builder => {

@@ -3,6 +3,7 @@ import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
+import { userActions } from '~/store/slices/userSlice';
 import { AppLoader } from '../common/AppLoader';
 import { delay } from '~/utils/delay';
 
@@ -12,15 +13,19 @@ interface AuthProviderProps {
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [seed] = useState(() => localStorageHelper.load('seed') ?? null);
+  const [customUsers] = useState(() => localStorageHelper.load('users') ?? null);
   const [isReady, setIsReady] = useState(false);
 
-  const actions = useAppActions(loginActions);
+  const actionsLogin = useAppActions(loginActions);
+  const actionsUser = useAppActions(userActions);
 
   const navigate = useNavigate();
 
   const handleRedirect = useCallback(() => {
     if (seed) {
-      actions.setSeed(seed);
+      console.log(customUsers);
+      if (customUsers) actionsUser.restoreUsers(customUsers);
+      actionsLogin.setSeed(seed);
       navigate('/list');
     } else {
       navigate('/');
