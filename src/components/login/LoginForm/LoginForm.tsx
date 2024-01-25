@@ -19,7 +19,8 @@ export const LoginForm: FC = () => {
     setSeed(e.target.value);
   };
 
-  const handleClick = () => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (seed === '' || !/^[a-zA-Z]+$/.test(seed)) {
       setIsError(true);
       return;
@@ -30,16 +31,16 @@ export const LoginForm: FC = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <form className={styles.wrapper} onSubmit={onSubmit}>
       <h1 className={styles.title}>Добро пожаловать</h1>
       <div className={styles.inner}>
         <span className={styles.placeholder}>Seed</span>
         <input className={cn(styles.input, isError && styles.error)} value={seed} onChange={handleInput} />
       </div>
       {isError && <p className={styles.note}>*Поле заполнено не корректно</p>}
-      <button className={styles.btn} onClick={handleClick}>
+      <button className={styles.btn} type="submit">
         Войти
       </button>
-    </div>
+    </form>
   );
 };

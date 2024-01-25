@@ -11,6 +11,7 @@ import { localStorageHelper } from '~/utils/localStorageHelper';
 export interface UserState {
   users: User[];
   isLoading: boolean;
+  isFetched: boolean;
   error: string;
   page: number;
 }
@@ -18,6 +19,7 @@ export interface UserState {
 const initialState: UserState = {
   users: [],
   isLoading: false,
+  isFetched: false,
   error: '',
   page: 1,
 };
@@ -88,6 +90,7 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isFetched = true;
         state.error = '';
         const payload = action.payload;
         payload.forEach(el => {
@@ -106,6 +109,7 @@ export const userSlice = createSlice({
 export const selectUsers = (state: StateSchema) => state.user?.users;
 export const selectPage = (state: StateSchema) => state.user?.page;
 export const selectUsersIsLoading = (state: StateSchema) => state.user?.isLoading;
+export const selectUsersIsFetched = (state: StateSchema) => state.user?.isFetched;
 export const selectUsersError = (state: StateSchema) => state.user?.error;
 
 export const userActions = { ...userSlice.actions, fetchUsers };

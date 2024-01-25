@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import cn from 'clsx';
 import { useAppActions } from '~/store/hooks';
 import { useAppSelector } from '~/store/hooks';
-import { userActions, selectUsers, selectPage } from '~/store/slices/userSlice';
+import { userActions, selectUsers, selectPage, selectUsersIsFetched } from '~/store/slices/userSlice';
 import { loginSelectors } from '~/store/slices/loginSlice';
 import { InView } from 'react-intersection-observer';
 
@@ -16,6 +16,7 @@ export const UsersTable: FC = () => {
 
   const seed = useAppSelector(loginSelectors.selectSeed);
   const usersData = useAppSelector(selectUsers);
+  const isFetched = useAppSelector(selectUsersIsFetched);
   const page = useAppSelector(selectPage);
 
   const [isModalActive, setIsModalActive] = useState(false);
@@ -47,7 +48,7 @@ export const UsersTable: FC = () => {
     if (seed && page) fetchData(seed, page);
   }, [seed, page]);
 
-  if (!usersData || usersData.length === 0) return null;
+  if (!usersData || usersData.length === 0 || !isFetched) return null;
 
   return (
     <div className={styles.wrapper}>

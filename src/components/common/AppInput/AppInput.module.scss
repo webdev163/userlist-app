@@ -21,17 +21,13 @@
   }
 
   &:not(:placeholder-shown) ~ .label {
-    transform: translateY(-15px);
-    font-size: 13px;
-    line-height: 13px; /* 100% */
-    letter-spacing: 0.4px;
+    transform: translateY(-15px) scale(0.9);
+    transform-origin: left;
   }
 
   &:focus ~ .label {
-    transform: translateY(-15px);
-    font-size: 13px;
-    line-height: 13px; /* 100% */
-    letter-spacing: 0.4px;
+    transform: translateY(-15px) scale(0.9);
+    transform-origin: left;
   }
 
   &.invalid {
