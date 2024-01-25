@@ -5,7 +5,7 @@ import { UsersTable } from '~/components/users/UsersTable';
 
 import styles from './UsersPage.module.scss';
 
-export const UsersPage: FC = () => {
+const UsersPage: FC = () => {
   return (
     <div className={cn(styles.wrapper, 'container')}>
       <Header />
@@ -13,3 +13,5 @@ export const UsersPage: FC = () => {
     </div>
   );
 };
+
+export default UsersPage;
