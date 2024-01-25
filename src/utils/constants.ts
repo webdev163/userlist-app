@@ -12,7 +12,7 @@ export enum LocalStorageKeys {
 
 export enum RouterPaths {
   LOGIN = '/',
-  LIST = '/list',
+  USERS = '/users',
 }
 
 export enum FormInputNames {

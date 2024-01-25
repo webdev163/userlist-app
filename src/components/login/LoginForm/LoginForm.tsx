@@ -28,7 +28,7 @@ export const LoginForm: FC = () => {
     }
     localStorageHelper.add(LocalStorageKeys.SEED, seed);
     actions.setSeed(seed);
-    navigate(RouterPaths.LIST);
+    navigate(RouterPaths.USERS);
   };
 
   return (

@@ -6,7 +6,7 @@ import { userActions } from '~/store/slices/userSlice';
 import { localStorageHelper } from '~/utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import { AppModal } from '~/components/common/AppModal';
-import { ModalForm } from '~/components/list/ModalForm';
+import { ModalForm } from '~/components/users/ModalForm';
 import { LocalStorageKeys, RouterPaths } from '~/utils/constants';
 
 import styles from './Header.module.scss';

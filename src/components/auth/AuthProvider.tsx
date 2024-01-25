@@ -26,7 +26,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     if (seed) {
       if (customUsers) actionsUser.restoreUsers(customUsers);
       actionsLogin.setSeed(seed);
-      navigate(RouterPaths.LIST);
+      navigate(RouterPaths.USERS);
     } else {
       navigate(RouterPaths.LOGIN);
     }

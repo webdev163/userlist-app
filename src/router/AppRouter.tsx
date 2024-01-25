@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Navigate, RouteProps, createBrowserRouter } from 'react-router-dom';
 import { LoginPage } from '~/pages/LoginPage';
-import { ListPage } from '~/pages/ListPage';
+import { UsersPage } from '~/pages/UsersPage';
 import { RequireAuth } from './RequireAuth';
 import { AuthProvider } from '~/components/auth/AuthProvider';
 import { RouterPaths } from '~/utils/constants';
@@ -12,7 +12,7 @@ type AppRoutesProps = RouteProps & {
 
 const routes = [
   { path: RouterPaths.LOGIN, element: <LoginPage /> },
-  { path: RouterPaths.LIST, element: <ListPage />, authOnly: true },
+  { path: RouterPaths.USERS, element: <UsersPage />, authOnly: true },
 ];
 
 const renderWithWrapper = (route: AppRoutesProps) => {
