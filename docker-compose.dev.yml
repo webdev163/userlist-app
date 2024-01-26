@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  client:
+    container_name: userlistapp-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: userlistapp-dev
+    restart: always
+    ports:
+      - 5173:5173
+      - 3010:3010
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=development
+      - WDS_SOCKET_HOST=127.0.0.1

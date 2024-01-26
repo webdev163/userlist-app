@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  client:
+    container_name: userlistapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: userlistapp
+    restart: always
+    ports:
+      - 80:80
