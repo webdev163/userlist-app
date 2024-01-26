@@ -16,7 +16,7 @@ const routes = [
 ];
 
 const renderWithWrapper = (route: AppRoutesProps) => {
-  const element = <Suspense fallback={<p>Loading...</p>}>{route.element}</Suspense>;
+  const element = <Suspense fallback={null}>{route.element}</Suspense>;
 
   return {
     index: route.path === RouterPaths.LOGIN,
