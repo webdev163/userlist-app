@@ -10,4 +10,14 @@ export default defineConfig({
       '~': path.join(__dirname, 'src'),
     },
   },
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+    hmr: {
+      port: 3010,
+    },
+  },
 });

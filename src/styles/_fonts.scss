@@ -1,8 +1,21 @@
-// @font-face {
-//   font-family: 'Basis Grotesque Pro';
-//   font-style: normal;
-//   font-weight: 400;
-//   font-display: swap;
-//   src: local(''), url('../assets/fonts/BasisGrotesquePro-Regular.woff2') format('woff2'),
-//     url('../assets/fonts/BasisGrotesquePro-Regular.woff') format('woff');
-// }
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local(''),
+    url('../assets/fonts/roboto-v30-cyrillic_latin-regular.woff2') format('woff2'),
+    url('../assets/fonts/roboto-v30-cyrillic_latin-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local(''),
+    url('../assets/fonts/roboto-v30-cyrillic_latin-500.woff2') format('woff2'),
+    url('../assets/fonts/roboto-v30-cyrillic_latin-500.woff') format('woff');
+}

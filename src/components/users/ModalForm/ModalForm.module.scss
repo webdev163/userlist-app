@@ -1,0 +1,123 @@
+.form {
+  width: 552px;
+}
+
+.title {
+  color: var(--dark-color);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.38px;
+  text-align: left;
+}
+
+.radio {
+  width: 340px;
+  height: 42px;
+  align-items: center;
+  background: #f2f2f7;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 26px;
+  margin-bottom: 6px;
+  max-width: 400px;
+  overflow: hidden;
+  position: relative;
+  color: var(--text-secondary-color);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+
+  label {
+    cursor: pointer;
+    padding: 10px 20px;
+    text-align: center;
+    width: 50%;
+    z-index: 2;
+  }
+
+  input[type='radio'] {
+    left: -9999px;
+    position: absolute;
+    z-index: -1;
+  }
+
+  input[type='radio']:nth-of-type(1):checked {
+    & ~ .slide {
+      left: 3px;
+    }
+
+    & ~ label:nth-of-type(1) {
+      color: var(--dark-color);
+    }
+  }
+
+  input[type='radio']:nth-of-type(2):checked {
+    & ~ .slide {
+      left: calc(50% + 4px);
+    }
+
+    & ~ label:nth-of-type(2) {
+      color: var(--dark-color);
+    }
+  }
+}
+
+.slide {
+  background: white;
+  height: calc(100% - 6px);
+  left: calc(50%);
+  position: absolute;
+  width: calc(50% - 7px);
+  transition: left 0.4s;
+  z-index: 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 6%);
+}
+
+.btnwrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.delete {
+  width: 44px;
+  height: 44px;
+  margin-right: 12px;
+  border-radius: 8px;
+  background: #f2f2f7;
+  background-image: url('../../../assets/icons/bin.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.btn {
+  width: 100%;
+  padding: 11px 20px;
+  border-radius: 8px;
+  background: linear-gradient(137deg, #00a5ee 1.58%, #14d7d1 96.24%);
+  color: var(--light-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+
+  &.disabled {
+    pointer-events: none;
+    background: linear-gradient(137deg, #99dbf8 1.58%, #a1efed 96.24%);
+  }
+}
+
+.error {
+  text-align: left;
+  margin-top: 16px;
+  color: var(--error-color);
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 0.4px;
+}

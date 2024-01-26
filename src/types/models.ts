@@ -1,5 +1,11 @@
 export interface User {
-  id: number;
-  name: string;
+  id?: string;
+  isCustom?: boolean;
+  gender: string;
   email: string;
+  name: {
+    first: string;
+    last: string;
+    title?: string;
+  };
 }

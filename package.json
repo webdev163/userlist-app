@@ -3,28 +3,41 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "author": "Dmitry Kolesnichenko <dmitriykol@gmail.com>",
+  "license": "ISC",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
     "stylelint": "stylelint --aei --fix \"src/**/*.{css,scss,sass}\"",
     "format": "prettier --write --log-level warn \"src/**/*.{ts,tsx,css,scss,sass}\"",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "analyze": "vite-bundle-visualizer",
+    "knip": "knip",
+    "prepare": "husky install",
+    "docker:start": "docker compose up -d",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up",
+    "docker:exec": "docker exec -it reactapp-dev /bin/sh",
+    "docker:stop": "docker compose down",
+    "docker:build": "docker compose build",
+    "docker:clean": "docker system prune -a -f --volumes"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
-    "axios": "^1.6.5",
+    "nanoid": "^5.0.4",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.5.3",
     "react-redux": "^9.1.0",
-    "react-router-dom": "^6.21.3"
+    "react-router-dom": "^6.21.3",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@types/node": "^20.11.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/react-transition-group": "^4.4.10",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
@@ -36,6 +49,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "husky": "^8.0.3",
+    "knip": "^4.2.1",
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
@@ -48,7 +62,8 @@
     "stylelint-scss": "^6.1.0",
     "typescript": "^5.2.2",
     "typescript-plugin-css-modules": "^5.0.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-bundle-visualizer": "^1.0.0"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,css,sass,scss}": "npm run format",

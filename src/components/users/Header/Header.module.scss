@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 76px;
+  background: var(--light-color);
+}
+
+.btn {
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+}
+
+.add {
+  color: var(--light-color);
+  background: linear-gradient(137deg, #00a5ee 1.58%, #14d7d1 96.24%);
+}
+
+.exit {
+  margin-left: 16px;
+  background: #f2f2f7;
+  color: var(--dark-color);
+}
