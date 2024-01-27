@@ -3,7 +3,7 @@ import { Navigate, RouteProps, createBrowserRouter } from 'react-router-dom';
 import { LoginPage } from '~/pages/LoginPage';
 import { UsersPage } from '~/pages/UsersPage';
 import { RequireAuth } from './RequireAuth';
-import { AuthProvider } from '~/components/auth/AuthProvider';
+import { InitProvider } from '~/components/common/InitProvider';
 import { RouterPaths } from '~/utils/constants';
 
 type AppRoutesProps = RouteProps & {
@@ -21,7 +21,7 @@ const renderWithWrapper = (route: AppRoutesProps) => {
   return {
     index: route.path === RouterPaths.LOGIN,
     path: route.path === RouterPaths.LOGIN ? undefined : route.path,
-    element: <AuthProvider>{route.authOnly ? <RequireAuth>{element}</RequireAuth> : element}</AuthProvider>,
+    element: <InitProvider>{route.authOnly ? <RequireAuth>{element}</RequireAuth> : element}</InitProvider>,
   };
 };
 

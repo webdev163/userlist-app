@@ -1,16 +1,17 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { RouterPaths } from '~/utils/constants';
+import { useAppSelector } from '~/store/hooks';
+import { loginSelectors } from '~/store/slices/loginSlice';
 
 interface RequireAuthProps {
   children: JSX.Element;
 }
 
 export const RequireAuth = ({ children }: RequireAuthProps) => {
-  const auth = true;
-  const location = useLocation();
+  const seed = useAppSelector(loginSelectors.selectSeed);
 
-  if (!auth) {
-    return <Navigate to={RouterPaths.LOGIN} state={{ from: location }} replace />;
+  if (!seed) {
+    return <Navigate to={RouterPaths.LOGIN} replace />;
   }
 
   return children;

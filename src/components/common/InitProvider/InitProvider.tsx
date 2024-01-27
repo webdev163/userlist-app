@@ -1,18 +1,18 @@
-import { FC, ReactElement, useState, useEffect, useCallback } from 'react';
+import { FC, ReactElement, useState, useEffect } from 'react';
+import { AppLoader } from '~/components/common/AppLoader';
+import { delay } from '~/utils/delay';
+import { LocalStorageKeys, RouterPaths, START_DELAY } from '~/utils/constants';
 import { localStorageHelper } from '~/utils/localStorageHelper';
-import { useNavigate } from 'react-router-dom';
 import { useAppActions } from '~/store/hooks';
 import { loginActions } from '~/store/slices/loginSlice';
 import { userActions } from '~/store/slices/userSlice';
-import { AppLoader } from '../common/AppLoader';
-import { delay } from '~/utils/delay';
-import { LocalStorageKeys, RouterPaths, START_DELAY } from '~/utils/constants';
+import { useNavigate } from 'react-router-dom';
 
-interface AuthProviderProps {
-  children: ReactElement | null;
+interface InitProviderProps {
+  children: ReactElement;
 }
 
-export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
+export const InitProvider: FC<InitProviderProps> = ({ children }) => {
   const [seed] = useState(() => localStorageHelper.load(LocalStorageKeys.SEED) ?? null);
   const [customUsers] = useState(() => localStorageHelper.load(LocalStorageKeys.USERS) ?? null);
   const [isReady, setIsReady] = useState(false);
@@ -22,20 +22,17 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const handleRedirect = useCallback(() => {
+  useEffect(() => {
     if (seed) {
       if (customUsers) actionsUser.restoreUsers(customUsers);
       actionsLogin.setSeed(seed);
       navigate(RouterPaths.USERS);
-    } else {
-      navigate(RouterPaths.LOGIN);
     }
-  }, []);
+  }, [seed]);
 
   useEffect(() => {
     delay(START_DELAY, () => setIsReady(true));
-    handleRedirect();
-  }, [seed, handleRedirect]);
+  }, []);
 
   if (!isReady) return <AppLoader />;
 
